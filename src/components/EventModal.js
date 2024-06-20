@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const EventModal = ({ show, handleClose, event, updateEvent, deleteEvent }) => {
   const [editableEvent, setEditableEvent] = useState(event);
+
+  useEffect(() => {
+    setEditableEvent(event);
+  }, [event]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,8 +23,10 @@ const EventModal = ({ show, handleClose, event, updateEvent, deleteEvent }) => {
       const response = await axios.put(`http://localhost:5000/api/events/${editableEvent.id}`, editableEvent);
       updateEvent(response.data);
       handleClose();
+      toast.success("Event updated successfully!");
     } catch (err) {
       console.error('Error updating event:', err);
+      toast.error("Failed to update event.");
     }
   };
 
@@ -28,8 +35,10 @@ const EventModal = ({ show, handleClose, event, updateEvent, deleteEvent }) => {
       await axios.delete(`http://localhost:5000/api/events/${editableEvent.id}`);
       deleteEvent(editableEvent.id);
       handleClose();
+      toast.success("Event deleted successfully!");
     } catch (err) {
       console.error('Error deleting event:', err);
+      toast.error("Failed to delete event.");
     }
   };
 
