@@ -21,7 +21,9 @@ const Login = ({ setToken }) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', user);
-      setToken(response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('authToken', token); // Store the token in local storage
+      setToken(token); // Set the token in the parent component state if needed
       toast.success("Login successful!");
     } catch (err) {
       toast.error("Login failed.");

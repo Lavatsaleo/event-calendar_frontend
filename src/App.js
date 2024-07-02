@@ -6,6 +6,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button, Form } from 'react-bootstrap';
+import './App.css';
+import './styles.css';
+import '@mui/material/styles';
 
 const App = () => {
   const [events, setEvents] = useState([]);
